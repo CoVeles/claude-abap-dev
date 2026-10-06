@@ -1,6 +1,6 @@
 # abap-dev — ABAP workflows for Claude Code
 
-A Claude Code plugin with four ABAP development workflows that run on the community MCP
+A Claude Code plugin with five ABAP development workflows that run on the community MCP
 servers you may already use — no SAP-specific IDE plugin needed:
 
 | Skill | What it does | Writes? |
@@ -9,9 +9,10 @@ servers you may already use — no SAP-specific IDE plugin needed:
 | `/abap-dev:clean-core-check` | Audit which SAP tables, classes, FMs and CDS views the code uses, their clean-core level (A–D) for your system type, and SAP's named successors | never |
 | `/abap-dev:abap-review` | Clean ABAP review: abaplint for mechanical rules + a reasoned read for what linters miss, each rule cited from the Clean ABAP style guide | never, unless you ask |
 | `/abap-dev:abap-unit` | Run ABAP Unit with the right tool for your system, explain failures from the test and the code under test | only after your OK |
+| `/abap-dev:abap-debug` | Breakpoints with narrow conditions, wait for the trigger from another session, stack/variables/stepping, guaranteed cleanup; or short-dump analysis | never changes code or variables |
 
 The skills also trigger on plain requests ("fix the ATC findings in ZCL_ORDER", "is this package
-clean core?", "review this class", "run the unit tests").
+clean core?", "review this class", "run the unit tests", "debug this method with input X").
 
 ## Built on
 
@@ -46,6 +47,9 @@ All skills share `abap-dev/reference/guardrails.md`. In short:
 - **No silencing** — no `"#EC`, pragmas or exemptions to hide a finding unless you ask and
   give the justification.
 - **Privacy** — customer code and names never go into web searches.
+- **Shared systems** — breakpoints are user-scoped and catch *every* request of that SAP user, so
+  `abap-debug` insists on a condition with a value only your test uses, confirms the stop came
+  from your trigger, and always deletes its breakpoints.
 
 ## Tested against
 
@@ -54,13 +58,15 @@ an abaplint MCP server (core 2.120) and mcp-sap-docs 0.3.55:
 
 - every tool call the skills prescribe, including a full ATC → fix → activate → re-check cycle on
   a throwaway `$TMP` class;
-- all four skills in real Claude Code sessions on real custom code — ATC triage of a demo-data
+- the four v0.1 skills in real Claude Code sessions on real custom code — ATC triage of a demo-data
   class, a clean-core audit of a 33-object RAP package (spot-checked against SAP's list), an
   18-test ABAP Unit run, and a Clean ABAP review whose top finding (a material-number conversion
   bug) was then proven on the system.
 
 Feedback from those runs is already in the skills (ownership checks on shared systems, narrow
-tables for terminal output, a section on writing new tests).
+tables for terminal output, a section on writing new tests). `abap-debug` (v0.2.0) comes from live
+debugging on the same system — including the lesson that on a shared SAP user a breakpoint can catch
+someone else's request.
 
 ## Credits
 

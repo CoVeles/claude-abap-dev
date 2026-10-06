@@ -1,7 +1,7 @@
 {
   "name": "abap-dev",
-  "version": "0.1.0",
-  "description": "ABAP development workflows for Claude Code on top of the MCP servers you already run (mcp-abap-adt, vibing-steampunk, abaplint, mcp-sap-docs): ATC fixing in confirmed batches, clean-core audit against SAP's released-objects list, Clean ABAP review with cited rules, and ABAP Unit runs that work around the S/4HANA 2023 endpoint gap.",
+  "version": "0.2.0",
+  "description": "ABAP development workflows for Claude Code on top of the MCP servers you already run (mcp-abap-adt, vibing-steampunk, abaplint, mcp-sap-docs): ATC fixing in confirmed batches, clean-core audit against SAP's released-objects list, Clean ABAP review with cited rules, and ABAP Unit runs that work around the S/4HANA 2023 endpoint gap, and debugging with narrowly conditioned breakpoints.",
   "author": { "name": "CoVeles", "url": "https://github.com/CoVeles" },
   "homepage": "https://github.com/CoVeles/claude-abap-dev",
   "repository": "https://github.com/CoVeles/claude-abap-dev",

@@ -31,6 +31,9 @@ If no ABAP system server is connected, say so and ask the user to paste the sour
 | Unit tests | `RunUnitTest(class_name)` | `RunUnitTests(object_url, only_failures?)` | see known issue below |
 | Where-used | `GetWhereUsed(object_name, object_type)` | `FindReferences(object_url, line, column)` | |
 | Dependencies of a source | — | `GetContext(name, object_type)` | public API contracts of everything it references |
+| Breakpoints | — | `SetBreakpoint(program, line, condition?)` / `GetBreakpoints` / `DeleteBreakpoint(breakpoint_id \| 'all')` | external, **user-scoped**; kinds `line`, `statement`, `exception` |
+| Debug a stopped request | — | `DebuggerListen(timeout≤240)` → `DebuggerGetStack` / `DebuggerGetVariables(variable_ids?)` / `DebuggerStep(step_type)` / `DebuggerDetach` | listen blocks; the code must run in **another** session |
+| Short dumps | — | `ListDumps(user?, program?, since?)` → `GetDump(dump_id)` | post-mortem: termination point + call stack |
 | Lint | — | — | abaplint `LintAbap(source_file, object_name, object_type)` — needs a **file**: write the source to a temp file first |
 | Released-API status | — | — | sap-docs `sap_get_object_details(object_type, object_name, system_type, target_clean_core_level)` |
 | SAP documentation | — | — | the `sap-kb` skill (KB first, then sap-docs `search`/`fetch`) |
@@ -49,3 +52,9 @@ as `%2f` (`/sap/bc/adt/oo/classes/%2fui2%2fcl_json`).
 - **ATC object types** in mcp-abap-adt do not include programs/includes in 17.1.0 — use vsp
   `RunATCCheck` with the program's `object_url`, or check the package.
 - **sap-docs `found: false`** means "not in SAP's released-objects list", **not** "compliant".
+- **vsp debugger** (measured on S/4HANA 2023): the first `SetBreakpoint` of a session takes ~20–25 s
+  (debugger handshake); `stepRunToLine` fails ("Parameter uri could not be found") — use repeated
+  `stepOver`; `stepContinue` releases the request but may answer HTTP 500 `AdiFailed` /
+  `debuggeeEnded` — that's the request finishing, not a failure; line numbers in the stack can
+  differ from the source line (class method includes) — locate the stop by the statement, not
+  the number.

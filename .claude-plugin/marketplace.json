@@ -6,8 +6,8 @@
     {
       "name": "abap-dev",
       "source": "./abap-dev",
-      "description": "ATC fixing in confirmed batches, clean-core audit, Clean ABAP review with cited rules, ABAP Unit runs.",
-      "version": "0.1.0",
+      "description": "ATC fixing in confirmed batches, clean-core audit, Clean ABAP review with cited rules, ABAP Unit runs, debugging with breakpoints on shared systems.",
+      "version": "0.2.0",
       "category": "development",
       "keywords": ["abap", "sap", "atc", "clean-core", "abap-unit"]
     }
