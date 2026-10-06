@@ -65,11 +65,14 @@ Read `DebuggerGetStack` and the input variables (`DebuggerGetVariables` with the
 - Keep the stop short — the triggering request (and its user) is waiting and may time out.
 
 ## 6. Release and clean up — always
-`stepContinue` (an `AdiFailed` / `debuggeeEnded` answer means the request finished — fine), then
+`stepContinue` (an `AdiFailed` / `debuggeeEnded` answer is vsp's reply *after* the continue released
+the request and it ran to the end — the continue worked; it does not mean the request had already
+finished on its own), then
 `DeleteBreakpoint('all')` and `GetBreakpoints` to confirm none are left, then `DebuggerDetach`. Do
 this even if something went wrong earlier. Remove the coordination note if you posted one.
 
 ## 7. Report
-What stopped where (statement + stack summary), the variable values that answer the question, what
+What stopped where (statement + stack summary), the variable values that answer the question
+(as a short list `name = value — note`, not a table: values are often too long for a cell), what
 the step(s) showed, whether the stop was confirmed as your trigger, and that the breakpoint is gone.
 Mark anything you inferred rather than saw in the debugger as your assessment.

@@ -66,7 +66,8 @@ an abaplint MCP server (core 2.120) and mcp-sap-docs 0.3.55:
 Feedback from those runs is already in the skills (ownership checks on shared systems, narrow
 tables for terminal output, a section on writing new tests). `abap-debug` (v0.2.0) comes from live
 debugging on the same system — including the lesson that on a shared SAP user a breakpoint can catch
-someone else's request.
+someone else's request — and was then run as a skill: a breakpoint conditioned on a unique test
+value, triggered over HTTP from a second session, confirmed as the right request, cleaned up.
 
 ## Credits
 
