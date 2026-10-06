@@ -1,0 +1,15 @@
+{
+  "name": "claude-abap-dev",
+  "owner": { "name": "CoVeles", "url": "https://github.com/CoVeles" },
+  "description": "ABAP development workflows for Claude Code that run on community ABAP MCP servers (mcp-abap-adt, vibing-steampunk, abaplint, mcp-sap-docs).",
+  "plugins": [
+    {
+      "name": "abap-dev",
+      "source": "./abap-dev",
+      "description": "ATC fixing in confirmed batches, clean-core audit, Clean ABAP review with cited rules, ABAP Unit runs.",
+      "version": "0.1.0",
+      "category": "development",
+      "keywords": ["abap", "sap", "atc", "clean-core", "abap-unit"]
+    }
+  ]
+}
