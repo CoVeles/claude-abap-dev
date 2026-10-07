@@ -55,6 +55,13 @@ as `%2f` (`/sap/bc/adt/oo/classes/%2fui2%2fcl_json`).
 - **vsp debugger** (measured on S/4HANA 2023): the first `SetBreakpoint` of a session takes ~20–25 s
   (debugger handshake); `stepRunToLine` fails ("Parameter uri could not be found") — use repeated
   `stepOver`; `stepContinue` releases the request but may answer HTTP 500 `AdiFailed` /
-  `debuggeeEnded` — that's the request finishing, not a failure; line numbers in the stack can
-  differ from the source line (class method includes) — locate the stop by the statement, not
-  the number.
+  `debuggeeEnded` — that's the request finishing, not a failure (both fixed by
+  oisee/vibing-steampunk#367); line numbers in the stack can differ from the source line (class
+  method includes, #366) — locate the stop by the statement, not the number.
+- **vsp over RFC / SAProuter** (measured on S/4 on premise behind a SAProuter): released vsp can't
+  use a route (`lookup /H/…: no such host`) and cuts every RFC call at 30 s, so a debugger listen
+  dies after 30 s. Both fixed in oisee/vibing-steampunk#375; until released, a patched build is
+  needed. The MCP debugger over RFC needs nothing installed on the server (ADT resources via
+  `SADT_REST_RFC_ENDPOINT`); only the `vsp rfc debug` command line uses a custom function module.
+- **mcp-abap-adt over RFC**: 17.1.0 builds the RFC address from `SAP_URL` only (no SAProuter route,
+  `SAP_SYSNR` from the session file ignored, logon language fixed to EN).
